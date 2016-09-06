@@ -1,0 +1,120 @@
+  请求行
+        HTTP请求方法（CET或者POST）
+        请求的相对路径
+        HTTP协议版本
+
+     请求头
+       主机IP地址及端口号
+       发送请求的浏览器类型及版本
+       请求的参数（查询字符串）
+       请求的访问时间
+       字符编码
+       内容类型
+
+     空行
+       没有任何内容
+
+     消息体
+         表单参数
+
+
+  响应：
+    状态行
+       HTTP协议版本
+       响应的状态码
+       响应描述
+
+    响应头
+      服务器类型及版本
+      响应时间
+      内容类型Content-Type
+      内容长度Content-Lenght
+    空行
+    消息体
+	HTML文件内容
+
+2、web应用程序的工作原理
+
+	浏览器会发送一个请求（地址栏输入地址 回车。
+	点击超链接。点击表单提交按钮）发送到服务器，服务器会
+	接受请求并处理请求，服务器根据用户请求的地址查找文件
+	，然后将文件里面的内容以文本方式放进响应中，发送给浏
+	览器，浏览器收到响应就读取html的文件内容，以html格式
+	展示网页，然后断开连接。
+
+	注意：有请求不一定有响应，有响应就必须有请求。
+
+3、web服务器
+
+	web服务器 是web应用程序的组成部分之一。
+
+	常见的有：
+		Apache Tomcat 6 7（推荐使用）
+		JBoss
+		IBM webSphere
+		WebLogic
+
+	Apache Tomcat 文件夹目录介绍：
+		bin——存放批处理文件 直接可以运行的启动tomcat 或者关闭tomcat；
+		conf-config 简写 配置文件
+			server.xml服务器相关的配置
+		lib-jar包文件
+		logs-存放web服务器的日志文件
+		temp-临时文件夹 存放一些临时文件
+		webapps-存放我们自己写的项目 项目部署
+		work-存放缓存文件
+4、web项目文件结构：
+	src-存放我们自己的包和类
+	webroot-醒目根目录 存放网页文件
+		WEB-INF
+			lib-存放当前web项目所需的jar包
+			classes-存放编译后的class文件
+			web.xml-当前web项目的配置文件
+5、项目部署（项目发布）
+	项目部署后目录结构
+		项目部署其实就是把webroot目录下的所有东西复制到webapps下面。
+
+	resp.setContentType("text/html");
+		resp.setCharacterEncoding("utf-8");
+		PrintWriter out = resp.getWriter();
+		out.println("<html>");
+			out.println("<head>");
+				out.println("<title></title>");
+			out.println("</head>");
+			out.println("<body>");
+				out.println("<h1>王杰 瓜娃子</h1>");
+			out.println("</body>");
+		out.println("</html>");
+
+6、Servlet的主要任务
+	获取表单参数（get，post）
+	生成结果
+	发送响应
+
+7、web容器
+	web容器是web服务器内部的一个隐藏的容器，用来替代main方法的作用
+	tomcat是单容器的，tomacat里面只有一个web容器
+	web容器主要是负责管理和运行servlet类，
+	对servlet的支持还包括：
+		通讯支持
+		生命周期管理
+		多线程支持
+		jsp支持
+		处理安全性
+
+8、web应用程序的工作流程（详细的工作原理）
+	浏览器发送请求（地址栏输入地址 回车。点击超链接。点击表单提交按钮）
+	，服务器收到请求后先判断访问 静态页面还是动态页面，如果是静态页面，
+	则web服务器直接处理，找到要访问的页面文件，将其内容放进响应中发送
+	回去，浏览器展示网页，关闭连接。
+	如果是动态的（servlet 、jsp），由于web服务器处理不了动态的网页，所以
+	他会将这个请求和响应对象交给web容器来处理，web容器会根据请求地址去
+	查找web.xml中相应的配置，找到servlet类全面，判断web容器中是否已经存在
+	该类的对象，如果没有该列对象则利用放射机制创建该类对象，并调用该对象
+	的doget或者dopost方法对本次进行处理，发送响应，关闭连接。如果web容器
+	中以存在该类的对象，则直接调用该对象的doget或者dopost方法对本次进行处理
+	，发送响应，关闭连接。
+		
+9、web应用程序访问地址的格式：
+	http：//ip地址：端口/项目名称/要访问的地址路径
+
